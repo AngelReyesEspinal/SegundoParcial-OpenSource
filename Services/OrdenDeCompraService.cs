@@ -18,13 +18,18 @@ namespace SistemaDeCompras.Services
 
         public IQueryable<OrdenDeCompra> GetOrdenByDepartamento(int? departamentoId, int? proveedorId)
         {
-            var data = _dbContext.Set<OrdenDeCompra>()
-                                 .AsQueryable()
-                                 .Where(x =>
-                                    proveedorId != null ? x.ProveedorId == proveedorId : true &&
-                                    departamentoId != null ? x.DepartamentoId == departamentoId : true
-                                 );
-            return data;
+            var query = _dbContext.Set<OrdenDeCompra>().AsQueryable();
+            if (departamentoId != null && proveedorId != null) 
+            {
+                query = query.Where(x => x.ProveedorId == proveedorId && x.DepartamentoId == departamentoId);
+            } 
+            else if (departamentoId != null || proveedorId != null) 
+            {
+                query = departamentoId != null 
+                    ? query.Where(x => x.DepartamentoId == departamentoId) 
+                    : query.Where(x => x.ProveedorId == proveedorId);
+            } 
+            return query;
         }
     }
 }

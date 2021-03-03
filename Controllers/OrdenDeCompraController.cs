@@ -50,7 +50,7 @@ namespace SistemaDeCompras.Controllers
         [HttpGet("GetOrdersByDepartmentOrProvider")]
         public IActionResult GetOrdersByDepartmentOrProvider([FromQuery] int? departamentoId, [FromQuery] int? proveedorId)
         {
-            var OrdenDeCompras = _ordenDeCompraService.GetOrdenByDepartamento(departamentoId, proveedorId).ToList();
+            var OrdenDeCompras = _ordenDeCompraService.GetOrdersByDepartmentOrProvider(departamentoId, proveedorId).ToList();
             return Ok(OrdenDeCompras);
         }
     }

@@ -8,7 +8,7 @@ namespace SistemaDeCompras.Services
 {
     public interface IOrdenDeCompraService : IBaseService<Models.OrdenDeCompra>
     {
-        IQueryable<OrdenDeCompra> GetOrdenByDepartamento(int? departamentoId, int? proveedorId);
+        IQueryable<OrdenDeCompra> GetOrdersByDepartmentOrProvider(int? departamentoId, int? proveedorId);
     }
     public class OrdenDeCompraService : BaseService<Models.OrdenDeCompra>, IOrdenDeCompraService
     {
@@ -16,7 +16,7 @@ namespace SistemaDeCompras.Services
         {
         }
 
-        public IQueryable<OrdenDeCompra> GetOrdenByDepartamento(int? departamentoId, int? proveedorId)
+        public IQueryable<OrdenDeCompra> GetOrdersByDepartmentOrProvider(int? departamentoId, int? proveedorId)
         {
             var query = _dbContext.Set<OrdenDeCompra>().AsQueryable();
             if (departamentoId != null && proveedorId != null) 

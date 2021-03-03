@@ -22,8 +22,8 @@ namespace SistemaDeCompras.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var OrdenDeCompraes = _ordenDeCompraService.GetAll().ToList();
-            return Ok(OrdenDeCompraes);
+            var OrdenDeCompras = _ordenDeCompraService.GetAll().ToList();
+            return Ok(OrdenDeCompras);
         }
 
         [HttpPost]
@@ -45,6 +45,13 @@ namespace SistemaDeCompras.Controllers
         {
             var result = _ordenDeCompraService.Delete(id);
             return Ok(result);
+        }
+
+        [HttpGet("GetOrdersByDepartmentOrProvider")]
+        public IActionResult GetOrdersByDepartmentOrProvider([FromQuery] int? departamentoId, [FromQuery] int? proveedorId)
+        {
+            var OrdenDeCompras = _ordenDeCompraService.GetOrdenByDepartamento(departamentoId, proveedorId).ToList();
+            return Ok(OrdenDeCompras);
         }
     }
 }

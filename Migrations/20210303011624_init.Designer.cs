@@ -10,7 +10,7 @@ using SistemaDeCompras.Models;
 namespace SistemaDeCompras.Migrations
 {
     [DbContext(typeof(SistemaDeComprasDbContext))]
-    [Migration("20210221173858_init")]
+    [Migration("20210303011624_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,7 +23,7 @@ namespace SistemaDeCompras.Migrations
 
             modelBuilder.Entity("SistemaDeCompras.Models.Articulo", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -31,8 +31,8 @@ namespace SistemaDeCompras.Migrations
                     b.Property<string>("Descripcion")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Estado")
-                        .HasColumnType("int");
+                    b.Property<bool>("Estado")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("Existencia")
                         .HasColumnType("bit");
@@ -52,13 +52,13 @@ namespace SistemaDeCompras.Migrations
 
             modelBuilder.Entity("SistemaDeCompras.Models.Departamento", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Estado")
-                        .HasColumnType("int");
+                    b.Property<bool>("Estado")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Nombre")
                         .HasColumnType("nvarchar(max)");
@@ -70,7 +70,7 @@ namespace SistemaDeCompras.Migrations
 
             modelBuilder.Entity("SistemaDeCompras.Models.OrdenDeCompra", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -84,13 +84,19 @@ namespace SistemaDeCompras.Migrations
                     b.Property<decimal>("CostoUnitario")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("Estado")
+                    b.Property<int>("DepartamentoId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("Estado")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("FechaOrden")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("NumeroDeOrden")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProveedorId")
                         .HasColumnType("int");
 
                     b.Property<int>("UnidadDeMedidaId")
@@ -100,6 +106,10 @@ namespace SistemaDeCompras.Migrations
 
                     b.HasIndex("ArticuloId");
 
+                    b.HasIndex("DepartamentoId");
+
+                    b.HasIndex("ProveedorId");
+
                     b.HasIndex("UnidadDeMedidaId");
 
                     b.ToTable("OrdenesDeCompra");
@@ -107,13 +117,13 @@ namespace SistemaDeCompras.Migrations
 
             modelBuilder.Entity("SistemaDeCompras.Models.Proveedor", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Estado")
-                        .HasColumnType("int");
+                    b.Property<bool>("Estado")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Identificacion")
                         .HasColumnType("nvarchar(max)");
@@ -128,7 +138,7 @@ namespace SistemaDeCompras.Migrations
 
             modelBuilder.Entity("SistemaDeCompras.Models.UnidadDeMedida", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -136,8 +146,8 @@ namespace SistemaDeCompras.Migrations
                     b.Property<string>("Descripcion")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Estado")
-                        .HasColumnType("int");
+                    b.Property<bool>("Estado")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -163,6 +173,18 @@ namespace SistemaDeCompras.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("SistemaDeCompras.Models.Departamento", "Departamento")
+                        .WithMany()
+                        .HasForeignKey("DepartamentoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SistemaDeCompras.Models.Proveedor", "Proveedor")
+                        .WithMany()
+                        .HasForeignKey("ProveedorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("SistemaDeCompras.Models.UnidadDeMedida", "UnidadDeMedida")
                         .WithMany()
                         .HasForeignKey("UnidadDeMedidaId")
@@ -170,6 +192,10 @@ namespace SistemaDeCompras.Migrations
                         .IsRequired();
 
                     b.Navigation("Articulo");
+
+                    b.Navigation("Departamento");
+
+                    b.Navigation("Proveedor");
 
                     b.Navigation("UnidadDeMedida");
                 });

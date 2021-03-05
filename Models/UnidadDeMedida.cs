@@ -7,6 +7,6 @@ namespace SistemaDeCompras.Models
 {
     public class UnidadDeMedida : Base
     {
-        public string Descripcion { get; set; }
+        public string Nombre { get; set; }
     }
 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SistemaDeCompras.Models;
 
 namespace SistemaDeCompras.Migrations
 {
     [DbContext(typeof(SistemaDeComprasDbContext))]
-    partial class SistemaDeComprasDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210305025842_4-3-2021")]
+    partial class _432021
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

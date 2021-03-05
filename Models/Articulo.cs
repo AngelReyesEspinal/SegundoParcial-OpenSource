@@ -7,7 +7,7 @@ namespace SistemaDeCompras.Models
 {
     public class Articulo : Base
     {
-        public string Descripcion { get; set; }
+        public string Nombre { get; set; }
         public string Marca { get; set; }
         public bool Existencia { get; set; }
         public int UnidadDeMedidaId { get; set; }
